@@ -5,18 +5,18 @@ import os, sys, argparse, math
 class MathUtils():
 
     def is_odd(self, number):
-        v = True 
-        if number % 2==0: 
-            v = False 
+        v = True
+        if number % 2==0:
+            v = False
         return v
-    
+
     def isprime(self, number):
         numnber = abs(int(number))
         if number < 2 : return False
         if number == 2 : return True
         if not number & 1 : return False
         for x in range (3 , int(number**0.5)+1, 2):
-            if number % x == 0: 
+            if number % x == 0:
                 return False
         return True
 
@@ -26,10 +26,10 @@ class MathUtils():
             if self.isprime(number):
                 return number
                 break
-            number = number+1
+            number += 1
 
     def ith_prime(self, number):
-        x = 2 
+        x = 2
         count = 1
         while count < number :
             if self.isprime(x):
@@ -39,12 +39,29 @@ class MathUtils():
         return x
 
     def sum_of_primes(self, number):
+        """Returns the sum of primes up to input number."""
+
         skip = 1
-        sum_ = 0 
+        sum_ = 0
         for x in xrange( 2, number+1, skip):
             if self.isprime(x):
                 skip = self.next_prime(x)
                 sum_ += x
+                print "prime",x , "sum = ",sum_
+        return sum_
+
+    def sum_of_first_primes(self, number):
+        """Returns the sum of first primes up to input number. """
+
+        sum_ = 0
+        prime = 2
+        counter = 0
+        while counter < number:
+            if self.isprime(prime):
+                sum_ += prime
+                counter += 1
+                prime = self.next_prime(prime)
+                print " counter",counter , " prime",prime , " sum = ",sum_
         return sum_
 
     def prime_factor(self, number):
@@ -57,7 +74,7 @@ class MathUtils():
                     print "prime:", i,"factor", prime_factor
                     skip = i
                     if number % i == 0:
-                        print "factor:", i                        
+                        print "factor:", i
                         prime_factor.append(i)
                     if len(prime_factor) > 10:
                         prime_factor.popleft()
@@ -69,17 +86,31 @@ class MathUtils():
         print product
         if len(product) < 2: return True
         if product[0] != product[-1]: return False
-        
+
         return is_palindrome(product[-1:1])
 
     def sumsq_difference_sqsum(self, number):
-        sumi =0
-        sqsum =0
+        sumi = 0
+        sqsum = 0
         for i in range(1, number+1):
             sumi += i
             sqsum += i**2
-            print i, sumi , sqsum, sumi**2, sumi**2 - sqsum 
+        #   print i, sumi , sqsum, sumi**2, sumi**2 - sqsum
         return (sumi**2 - sqsum)
+
+    def factorial(self, number):
+        factorial =1
+        for i in range (1, number + 1):
+            factorial *= i
+        return factorial
+
+    def smallest_divisible(self, number):
+        common_multiple = self.factorial(number)
+        for i in xrange(number, 1, -1):
+            if common_multiple % i == 0 and self.isprime(i):
+                common_multiple  = common_multiple / i
+                print common_multiple
+        return common_multiple
 
     def run(self, util, number):
         if util == 'next_prime':
@@ -98,10 +129,14 @@ class MathUtils():
             print self.ith_prime(number)
         elif util == 'sum_of_primes':
             print self.sum_of_primes(number)
+        elif util == 'sum_of_first_primes':
+            print self.sum_of_first_primes(number)
+        elif util == 'smallest_divisible':
+            print self.smallest_divisible(number)
         else:
             print ' i dont understand'
-            sys.exit(1) 
-            
+            sys.exit(1)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("util")
