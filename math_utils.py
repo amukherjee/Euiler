@@ -5,6 +5,7 @@ import os, sys, argparse, math
 class MathUtils():
 
     def divisible_by_sum(self, number):
+        """ Returns the sum of a list of numbers divisible to the input. """
         divisible_sum = 0
         for x in xrange(1, number):
             if number % x == 0:
@@ -13,16 +14,17 @@ class MathUtils():
         return divisible_sum
 
     def list_amicable(self, number):
-        """ Will return the highest amicable number with the given range."""
+        """ Returns a sum of a list of amicable number given a range. """
         amicable_sum = 0
         sum_rl = 0
         sum_lr = 0
-        for x in xrange ( number, 1 , -1):
+        for x in xrange ( number, 0 , -1):
             sum_rl = self.divisible_by_sum(x)
             sum_lr = self.divisible_by_sum(sum_rl)
-            if x == sum_lr:
-                #print x , sum_rl, sum_lr
+            if x == sum_lr and sum_rl != sum_lr:
+                print x , sum_rl, sum_lr, amicable_sum
                 amicable_sum += x
+
         return amicable_sum
 
 
