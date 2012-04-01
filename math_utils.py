@@ -4,6 +4,28 @@ import os, sys, argparse, math
 
 class MathUtils():
 
+    def divisible_by_sum(self, number):
+        divisible_sum = 0
+        for x in xrange(1, number):
+            if number % x == 0:
+                divisible_sum += x
+
+        return divisible_sum
+
+    def list_amicable(self, number):
+        """ Will return the highest amicable number with the given range."""
+        amicable_sum = 0
+        sum_rl = 0
+        sum_lr = 0
+        for x in xrange ( number, 1 , -1):
+            sum_rl = self.divisible_by_sum(x)
+            sum_lr = self.divisible_by_sum(sum_rl)
+            if x == sum_lr:
+                #print x , sum_rl, sum_lr
+                amicable_sum += x
+        return amicable_sum
+
+
     def is_odd(self, number):
         v = True
         if number % 2==0:
@@ -37,6 +59,13 @@ class MathUtils():
                 print "count:", count ,"prime:", x
                 count +=1
         return x
+
+    def list_primes_till(self, number):
+        prime  = 2
+        while prime < number:
+            print prime,
+            prime = self.next_prime(prime)
+
 
     def sum_of_primes(self, number):
         """Returns the sum of primes up to input number."""
@@ -133,6 +162,10 @@ class MathUtils():
             print self.sum_of_first_primes(number)
         elif util == 'smallest_divisible':
             print self.smallest_divisible(number)
+        elif util == 'list_primes_till':
+            print self.list_primes_till(number)
+        elif util == 'list_amicable':
+            print self.list_amicable(number)
         else:
             print ' i dont understand'
             sys.exit(1)
