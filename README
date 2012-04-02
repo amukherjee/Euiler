@@ -1,3 +1,5 @@
 Project Euiler Problems 
 
 This will be a utility library that can be used to successfully solve the Project Euiler problems
+I guess I should start a listing for how I got my solutions. 
+problem 21)  python math_utils.py list_amicable 10000 
