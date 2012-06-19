@@ -4,28 +4,44 @@ import os, sys, argparse, math
 
 class MathUtils():
 
-    def divisible_by_sum(self, number):
-        """ Returns the sum of a list of numbers divisible to the input. """
+    def divisible_by(self, number, return_type):
+        """ Returns the sum of a list of numbers , or the list itself divisible to the input. """
         divisible_sum = 0
+        divisible_list = []
         for x in xrange(1, number):
             if number % x == 0:
                 divisible_sum += x
+                divisible_list.append(x)
 
-        return divisible_sum
+        if return_type=='sum':
+            return divisible_sum
+        else:
+            return divisible_list
 
     def list_amicable(self, number):
         """ Returns a sum of a list of amicable number given a range. """
         amicable_sum = 0
         sum_rl = 0
         sum_lr = 0
-        for x in xrange ( number, 0 , -1):
-            sum_rl = self.divisible_by_sum(x)
-            sum_lr = self.divisible_by_sum(sum_rl)
+        for x in xrange(number, 0, -1):
+            sum_rl = self.divisible_by(x,'sum')
+            sum_lr = self.divisible_by(sum_rl,'sum')
             if x == sum_lr and sum_rl != sum_lr:
-                print x , sum_rl, sum_lr, amicable_sum
+                #print x , sum_rl, sum_lr, amicable_sum
                 amicable_sum += x
 
         return amicable_sum
+
+    def perfection(self, number):
+        if number == self.divisible_by(number,'sum'):
+            return 'perfect'
+        elif number > self.divisible_by(number,'sum'):
+            return 'abundant'
+        else:
+            return 'deficient'
+
+    def abundance(self, number):
+        pass
 
 
     def is_odd(self, number):
